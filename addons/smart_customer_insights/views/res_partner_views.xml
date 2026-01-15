@@ -6,18 +6,19 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <!-- Bouton dans le header -->
-            <xpath expr="//header" position="inside">
-                <button name="action_analyze_with_ai" 
-                        type="object" 
-                        string="Analyser avec IA" 
-                        class="oe_highlight"
-                        icon="fa-magic"/>
-            </xpath>
             
             <!-- Onglet IA -->
             <xpath expr="//notebook" position="inside">
                 <page string="🤖 Intelligence IA" name="ai_insights">
+                    <group>
+                        <group>
+                            <button name="action_analyze_with_ai" 
+                                    type="object" 
+                                    string="🔍 Analyser avec IA" 
+                                    class="btn-primary"/>
+                        </group>
+                    </group>
+                    
                     <group>
                         <group string="Analyse Automatique">
                             <field name="ai_sentiment" widget="badge" 
@@ -28,9 +29,8 @@
                             <field name="insight_count"/>
                             <button name="action_view_insights" 
                                     type="object" 
-                                    string="Voir les Insights" 
+                                    string="➜ Voir les Insights" 
                                     class="oe_link"
-                                    icon="fa-list"
                                     invisible="insight_count == 0"/>
                         </group>
                     </group>

@@ -32,7 +32,7 @@
                     <button name="action_mark_read" type="object" 
                             string="Marquer comme lu" class="oe_highlight"
                             invisible="is_read"/>
-                    <field name="is_read" widget="statusbar"/>
+                    <field name="is_read" invisible="1"/>
                 </header>
                 <sheet>
                     <group>
