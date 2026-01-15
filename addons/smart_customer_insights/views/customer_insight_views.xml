@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue Liste -->
+    <record id="view_customer_insight_tree" model="ir.ui.view">
+        <field name="name">customer.insight.tree</field>
+        <field name="model">customer.insight</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="not is_read" decoration-muted="is_read">
+                <field name="partner_id"/>
+                <field name="insight_type"/>
+                <field name="sentiment" widget="badge" 
+                       decoration-success="sentiment == 'positive'"
+                       decoration-warning="sentiment == 'neutral'"
+                       decoration-danger="sentiment == 'negative'"/>
+                <field name="confidence_score" widget="progressbar"/>
+                <field name="create_date"/>
+                <field name="is_read" invisible="1"/>
+                <button name="action_mark_read" type="object" 
+                        string="Marquer lu" icon="fa-check"
+                        invisible="is_read"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue Formulaire -->
+    <record id="view_customer_insight_form" model="ir.ui.view">
+        <field name="name">customer.insight.form</field>
+        <field name="model">customer.insight</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_read" type="object" 
+                            string="Marquer comme lu" class="oe_highlight"
+                            invisible="is_read"/>
+                    <field name="is_read" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="insight_type"/>
+                            <field name="sentiment"/>
+                        </group>
+                        <group>
+                            <field name="confidence_score" widget="percentpie"/>
+                            <field name="create_date"/>
+                        </group>
+                    </group>
+                    <group string="Contenu de l'Insight">
+                        <field name="content" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_customer_insight" model="ir.actions.act_window">
+        <field name="name">Insights IA</field>
+        <field name="res_model">customer.insight</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

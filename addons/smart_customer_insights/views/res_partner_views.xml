@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Formulaire Contact avec IA -->
+    <record id="view_partner_form_ai" model="ir.ui.view">
+        <field name="name">res.partner.form.ai</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- Bouton dans le header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_analyze_with_ai" 
+                        type="object" 
+                        string="Analyser avec IA" 
+                        class="oe_highlight"
+                        icon="fa-magic"/>
+            </xpath>
+            
+            <!-- Onglet IA -->
+            <xpath expr="//notebook" position="inside">
+                <page string="🤖 Intelligence IA" name="ai_insights">
+                    <group>
+                        <group string="Analyse Automatique">
+                            <field name="ai_sentiment" widget="badge" 
+                                   decoration-success="ai_sentiment == 'positive'"
+                                   decoration-warning="ai_sentiment == 'neutral'"
+                                   decoration-danger="ai_sentiment == 'negative'"/>
+                            <field name="ai_last_analysis"/>
+                            <field name="insight_count"/>
+                            <button name="action_view_insights" 
+                                    type="object" 
+                                    string="Voir les Insights" 
+                                    class="oe_link"
+                                    icon="fa-list"
+                                    invisible="insight_count == 0"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Résumé Intelligent">
+                        <field name="ai_summary" nolabel="1" 
+                               placeholder="Aucun résumé généré. Cliquez sur 'Analyser avec IA'"/>
+                    </group>
+                    
+                    <group string="Recommandations IA">
+                        <field name="ai_recommendations" nolabel="1" 
+                               placeholder="Aucune recommandation disponible"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

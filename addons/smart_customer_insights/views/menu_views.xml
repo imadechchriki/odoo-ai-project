@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Principal -->
+    <menuitem id="menu_smart_customer_insights_root" 
+              name="IA Clients" 
+              sequence="10"
+              web_icon="smart_customer_insights,static/description/icon.png"/>
+
+    <!-- Sous-menus -->
+    <menuitem id="menu_customer_insights" 
+              name="Insights IA" 
+              parent="menu_smart_customer_insights_root"
+              action="action_customer_insight" 
+              sequence="10"/>
+    
+    <menuitem id="menu_customers_with_ai" 
+              name="Clients" 
+              parent="menu_smart_customer_insights_root"
+              action="base.action_partner_form" 
+              sequence="20"/>
+</odoo>
