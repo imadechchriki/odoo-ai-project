@@ -1,1 +1,61 @@
+# =========================
+# Python / Odoo
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+
+# Odoo generated files
+.odoo/
+*.egg-info/
+*.pot
+*.mo
+
+# =========================
+# PostgreSQL data (NE JAMAIS VERSIONNER)
+# =========================
+postgresql-data/
+postgresql-data/**
+pg_data/
+pgdata/
+
+# =========================
+# Docker
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# Secrets / Tokens
+# =========================
 token.txt
+*.key
+*.pem
+*.secret
+
+# =========================
+# IDE / OS
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node / Frontend (si un jour utilisé)
+# =========================
+node_modules/
+dist/
+build/
+
+# =========================
+# Backup / Temp
+# =========================
+*.bak
+*.backup
+*.tmp
+*.old
