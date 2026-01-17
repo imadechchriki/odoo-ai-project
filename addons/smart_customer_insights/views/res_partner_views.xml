@@ -25,6 +25,11 @@
                                    decoration-success="ai_sentiment == 'positive'"
                                    decoration-warning="ai_sentiment == 'neutral'"
                                    decoration-danger="ai_sentiment == 'negative'"/>
+                            
+                            <!-- AJOUT DU SCORE DE CONFIANCE -->
+                            <field name="ai_confidence_score" widget="progressbar" 
+                                   string="Confiance"/>
+                            
                             <field name="ai_last_analysis"/>
                             <field name="insight_count"/>
                             <button name="action_view_insights" 

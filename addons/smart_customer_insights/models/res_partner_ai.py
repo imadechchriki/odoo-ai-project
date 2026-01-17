@@ -12,6 +12,14 @@ class ResPartnerAI(models.Model):
         ('negative', 'Négatif')
     ], string='Sentiment IA', readonly=True)
     
+    # AJOUT DU CHAMP MANQUANT
+    ai_confidence_score = fields.Float(
+        string='Score de Confiance',
+        digits=(5, 2),
+        readonly=True,
+        help='Score de confiance de l\'analyse IA (0-100%)'
+    )
+    
     ai_summary = fields.Text(string='Résumé IA', readonly=True)
     ai_recommendations = fields.Text(string='Recommandations IA', readonly=True)
     ai_last_analysis = fields.Datetime(string='Dernière Analyse', readonly=True)
@@ -39,13 +47,21 @@ class ResPartnerAI(models.Model):
             # Analyser avec l'IA
             result = api.analyze_customer(context)
             
+            _logger.info(f"📊 Résultat analyse: {result}")
+            
+            # CORRECTION: Sauvegarder le score de confiance
+            confidence_percent = result.get('confidence', 0.5) * 100  # Convertir 0.85 -> 85
+            
             # Mettre à jour les champs
             self.write({
                 'ai_sentiment': result.get('sentiment', 'neutral'),
+                'ai_confidence_score': confidence_percent,  # AJOUT ICI
                 'ai_summary': result.get('summary', ''),
                 'ai_recommendations': result.get('recommendations', ''),
                 'ai_last_analysis': fields.Datetime.now()
             })
+            
+            _logger.info(f"✅ Sauvegardé - Sentiment: {result.get('sentiment')}, Score: {confidence_percent:.1f}%")
             
             # Créer un insight
             self.env['customer.insight'].create({
@@ -53,19 +69,20 @@ class ResPartnerAI(models.Model):
                 'insight_type': 'analysis',
                 'content': result.get('summary', ''),
                 'sentiment': result.get('sentiment', 'neutral'),
+                'confidence_score': confidence_percent,  # AJOUT ICI AUSSI
             })
             
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',
                 'params': {
-                    'message': 'Analyse IA terminée avec succès !',
+                    'message': f'Analyse terminée: {result.get("sentiment").upper()} ({confidence_percent:.0f}% confiance)',
                     'type': 'success',
                     'sticky': False,
                 }
             }
         except Exception as e:
-            _logger.error(f"Erreur analyse IA: {str(e)}")
+            _logger.error(f"❌ Erreur analyse IA: {str(e)}", exc_info=True)
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',

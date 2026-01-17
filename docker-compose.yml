@@ -15,6 +15,11 @@ services:
       - USER=odoo
       - PASSWORD=odoo_password
     command: --dev=reload
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    networks:
+      - odoo-network
 
   db:
     image: postgres:15
@@ -24,6 +29,12 @@ services:
       - POSTGRES_PASSWORD=odoo_password
     volumes:
       - ./postgresql-data:/var/lib/postgresql/data
+    networks:
+      - odoo-network
 
 volumes:
   odoo-data:
+
+networks:
+  odoo-network:
+    driver: bridge
